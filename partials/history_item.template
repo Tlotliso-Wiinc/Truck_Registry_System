@@ -1,0 +1,12 @@
+
+<tr class="<%= item.type %>">
+  <th scope="row"><%= count %></th>
+  <td><%= item.time %></td>
+  <td><%= item.type %></td>
+  <td><%= item.truck_size %></td>
+  <td><%= item.truck_number %></td>
+  <td><%= item.order_number %></td>
+  <td><%= item.phone %></td>
+  <td><%= item.destination %></td>
+  <td><%= item.comment %></td>
+</tr>

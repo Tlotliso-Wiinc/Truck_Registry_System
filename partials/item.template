@@ -1,0 +1,28 @@
+
+<tr class="<%= item.state %>">
+  <td>
+    <input type="checkbox" class="check ticked" checked>
+    <input type="checkbox" class="check unticked">
+  </td>
+  <td><b><%= count %></b></td>
+  <td><%= item.truck_number %></td>
+  <td><%= item.phone %></td>
+  <td><%= item.time %></td>
+  <td><%= item.comment %></td>
+  <td><%= item.order_number %></td>
+  <td><%= item.destination %></td>
+  <td><%= item.load_time %></td>
+  <td><span class="oi oi-check" title="check" aria-hidden="true"></td>
+  <td>
+    <div class="buttons float-right">
+        <button class="btn btn-light btn-sm load" id="l<%= item.id %>">Assign Load</button>
+        <button class="btn btn-light btn-sm unload" id="ul<%= item.id %>">Unload</button>
+        <a class="btn btn-light btn-sm edit" id="e<%= item.id %>" href="#/edit/<%= item.id %>">
+            <span class="oi oi-pencil" title="pencil" aria-hidden="true"></span>
+        </a>
+        <button class="btn btn-light btn-sm delete" id="r<%= item.id %>">
+            <span class="oi oi-delete" title="delete" id="s<%= item.id %>" aria-hidden="true"></span>
+        </button>
+    </div>
+  </td>
+</tr>

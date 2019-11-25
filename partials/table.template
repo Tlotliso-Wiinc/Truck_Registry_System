@@ -1,0 +1,31 @@
+<div class="row d-flex flex-row justify-content-between">
+    <div class="flex-div">
+        <a class="btn btn-primary text-light" href="#/register/<%= truck_size %>" id="register-btn">Register a <%= truck_size %> truck</a>
+    </div>
+    <div class="flex-div">
+        <h4 class="text-left"><b><%= truck_size %></b></h4>
+    </div>
+    <div class="flex-div">
+        <a class="btn btn-secondary text-light" href="http://localhost/trucks/api/v1/export_registry" target="_blank" id="export-btn">Export</a>
+    </div>
+</div>
+
+<table class="table" id="tableList">
+  <thead class="bg-dark text-light">
+    <tr>
+      <th scope="col">&nbsp;</th>
+      <th scope="col">#</th>
+      <th scope="col">Truck Number</th>
+      <th scope="col">Phone</th>
+      <th scope="col">RT</th>
+      <th scope="col">Comment</th>
+      <th scope="col">Sales Order</th>
+      <th scope="col">Destination</th>
+      <th scope="col">LT</th>
+      <th scope="col">&nbsp;</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>

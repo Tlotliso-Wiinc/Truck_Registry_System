@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Load Truck</title>
+	<link rel="stylesheet" href="lib/bootstrap-4.0.0-beta.2/dist/css/bootstrap.min.css">
+	<style type="text/css">
+		form {
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<form>
+					<div>
+						<div class="form-group">
+			                <label for="destination">Destination</label>
+			                <input type="text" class="form-control" id="destination" name="destination" placeholder="" 
+			                required autofocus>
+			            </div>
+			            <div class="form-group">
+			                <label for="order_number">Sales Order</label>
+			                <input type="text" class="form-control" id="order_number" name="order_number" placeholder="" required>
+			            </div>
+			            <div class="form-group">
+			                <input type="submit" class="form-control btn btn-primary" name="order" value="Submit">
+			            </div>
+					</div>
+				</form>	
+			</div>
+		</div>
+	</div>
+ 	<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+
+		const electron = require('electron');
+        const {ipcRenderer} = electron;
+          
+        const Store = require('electron-store');
+        const store = new Store();
+        
+        const form = document.querySelector('form');
+        form.addEventListener('submit', submitForm);
+        
+        function submitForm(e) {
+            e.preventDefault();
+            const id = store.get('id');
+            const destination = document.querySelector('#destination').value;
+            const order_number = document.querySelector('#order_number').value;
+            
+            const data = {
+                "id": id,
+                "destination": destination,
+                "order_number": order_number
+            }
+            
+            ipcRenderer.send('load_data', data);
+        }
+
+	</script>
+</body>
+</html>

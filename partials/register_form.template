@@ -1,0 +1,54 @@
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form method="post" class="register-form" action="#/register">
+            <input type="hidden" name="size" value="<%= truck_size %>" id="size">
+            <div>
+                <div class="form-group">
+                    <label for="truck_number">Truck Number</label>
+                    <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="" required autofocus>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone number</label>
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="" required>
+                </div>
+                <div class="form-group">
+                  <label for="comment">Comment</label>
+                  <textarea class="form-control" id="comment" rows="2" name="comment"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-primary" name="register" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(function() {
+        document.getElementById("truck_number").focus();
+        $("#truck_number").keyup(function() {
+            number = $("#truck_number").val();
+            getTruck(number);
+        });
+        
+        function getTruck(number) {
+            $.ajax ({
+                type: "GET",
+                url: "http://localhost/trucks/api/v1/trucks/number/" + number,                           
+                dataType: "json",
+                cache: false,
+                success: function(data) {
+                    //console.log(data);
+                    if (data.code == 200) {
+                        $("#phone").val(data.truck.phone);
+                    } else {
+                        $("#phone").val('');
+                    }
+                },
+                error: function(data) {
+                    $("#phone").val('');
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,28 @@
+<div class="row no-gutters">
+    <div class="flex-div col-sm">
+    </div>
+    <div class="flex-div col-sm">
+        <h4 class="text-center">Activity history</h4>
+    </div>
+    <div class="flex-div col-sm float-right">
+        <a class="btn btn-secondary text-light float-right" href="#export>" id="export-btn">Export</a>
+    </div>
+</div>
+
+<table class="table" id="tableList">
+  <thead class="bg-dark text-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Time</th>
+      <th scope="col">Activity Type</th>
+      <th scope="col">Load Size</th>
+      <th scope="col">Truck Number</th>
+      <th scope="col">Order Number</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>

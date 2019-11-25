@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>T.R.S</title>
+        <link rel="stylesheet" href="lib/bootstrap-4.0.0-beta.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="lib/open-iconic-master/font/css/open-iconic-bootstrap.min.css">
+        <style type="text/css">
+            .flex-div {
+                /* padding: 20px; */
+            }
+            
+            #register-btn, #export-btn, .flex-div h4 {
+                margin: 20px;
+            }
+            
+            .flex-div h5 {
+                text-decoration: underline;
+            }
+            
+            table tr td, table tr, table tr th {
+                padding: 1px !important;
+                margin: 0px !important;
+            }
+            
+            table tbody tr td .load, table tbody tr td .edit, 
+            table tbody tr td .delete {
+                margin: 0 10px;
+            }
+
+            table tbody tr.loaded, table tbody tr.load {
+                /* color: #28A745 !important; */
+                /* background-color: #28A745 !important; */
+                /* color: #fff !important; */
+            }
+            
+            table tbody tr.loaded {
+                font-weight: bold;
+            }
+            
+            table tbody tr button.unload {
+                margin-right: 10px;
+                display: none;
+            }
+            
+            table tbody tr.loaded button.unload {
+                display: inline-block;
+            }
+            
+            table tbody tr.loaded button.load {
+                display: none;
+            }
+            
+            table tbody tr.edit {
+                color: #17A2B8;
+                /*color: darkorange;*/
+            }
+            
+            table tbody tr.removal {
+                color: #DC3545;
+            }
+
+            table tbody a.edit,  table tbody tr td button {
+                color: #007bff !important;
+            }
+            
+            table tbody tr button.load {
+            /*
+                background-color: cornflowerblue;
+                border-color: cornflowerblue;
+            */
+            }
+            
+            table tbody tr td .check {
+                padding: 10px;
+                margin: 0px 5px;
+            }
+            
+            table tbody tr .unticked {
+                display: none;
+            }
+            
+            table tbody tr.renewed .ticked {
+                display: none;
+            }
+            
+            table tbody tr.renewed .unticked {
+                display: inline-block;
+            }
+            
+            table tbody tr td span.oi-check {
+                color: green;
+                margin-left: 50px;
+                visibility: hidden;
+            }
+            
+            table tbody tr.loaded td span.oi-check {
+                color: green;
+                margin-left: 50px;
+                visibility: visible;
+            }
+            
+            table tbody tr .buttons {
+                margin-right: 20px;
+            }
+            
+            .register-form {
+                padding: 50px;
+                padding-top: 20px;
+            }
+            
+            #myTab a.nav-link .badge {
+                margin: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+        </div>
+        <nav id="nav">
+        <!--
+            <ul>
+                <li><a href="#/inbox">inbox</a></li>
+                <li><a href="#/compose">compose</a></li>
+                <li><a href="#/label/drafts">drafts</a></li>
+            </ul>
+        -->
+            
+             <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link" id="four-tonne-tab" data-toggle="tab" href="#/truck_size/4-tonne" role="tab" aria-controls="fifteen-tonne" aria-selected="false">4-tonne <span class="badge badge-secondary" id="4-tonne"></span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="ten-tonne-tab" data-toggle="tab" href="#/truck_size/10-tonne" role="tab" aria-controls="ten-tonne" aria-selected="true">10-tonne <span class="badge badge-secondary" id="10-tonne"></span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="fifteen-tonne-tab" data-toggle="tab" href="#/truck_size/15-tonne" role="tab" aria-controls="fifteen-tonne" aria-selected="false">15-tonne <span class="badge badge-secondary" id="15-tonne"></span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="twenty-tonne-tab" data-toggle="tab" href="#/truck_size/20-tonne" role="tab" aria-controls="twenty-tonne" aria-selected="false">20-tonne <span class="badge badge-secondary" id="20-tonne"></span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="thirty-two-tonne-tab" data-toggle="tab" href="#/truck_size/32-tonne" role="tab" aria-controls="thirty-two-tonne" aria-selected="false">32-tonne <span class="badge badge-secondary" id="32-tonne"></span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="history-tab" data-toggle="tab" href="#/history" role="tab" aria-controls="history" aria-selected="false">History</a>
+              </li>
+            <!--
+              <li class="nav-item">
+                <a class="nav-link" id="trucks-tab" data-toggle="tab" href="#trucks" role="tab" aria-controls="trucks" aria-selected="false">All Trucks</a>
+              </li>
+            -->
+            </ul>
+        </nav>
+        <div id="content">
+        </div>
+
+        <script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="lib/popper.js/dist/popper.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="lib/bootstrap-4.0.0-beta.2/dist/js/bootstrap.min.js"></script>
+        <script src="lib/sammyjs/vendor/jquery.js"></script>
+        <script src="lib/sammyjs/lib/sammy.js" type="text/javascript" charset="utf-8"></script>
+        <script src="lib/sammyjs/lib/plugins/sammy.template.js"></script>
+        <script type="text/javascript">
+
+            $(function() {
+                var ratPack = $.sammy(function() {
+
+                    this.element_selector = '#content';
+                    this.use('Template');
+
+                    // routes will go here
+                    this.get('#/inbox', function(context) {
+                        context.app.swap('');
+                        context.$element().append('<h1>inbox</h1>');
+                    });
+
+                    this.get('#/label/:name', function(context) {
+                        context.app.swap('');
+                        context.$element().append('<h1>' + this.params['name'] + '</h1>'); 
+                    });
+                    
+                    this.get('#/history', function(context) {
+                        context.app.swap('');
+                        this.render('partials/history_table.template').appendTo(this.$element());
+
+                        var historyContext = context;
+                        
+                        var getHistory = function(context) {
+                            $.ajax ({
+                                type: "GET",                                   
+                                url: "http://localhost/trucks/api/v1/history",                            
+                                dataType: "json",
+                                cache: false,
+                                timeout: 30000,
+                                success: function(data) {
+                                    console.log(data);
+                                    $("table tbody").html("");
+                                    if(data.list.length > 0) {
+                                        for (i = 0; i < data.list.length; i++) {
+                                            counter = i + 1;
+                                            context.render('partials/history_item.template', {item: data.list[i], count: counter}).appendTo(context.$element('table tbody'));
+                                        }
+                                    } else {
+                                        $("table tbody").append('<tr><td colspan="8"><p class="text-center">There are no activities in the history log</p></td></tr>');
+                                    }
+                                },
+                                complete: function() {						
+                                    //getHistory();
+                                }
+
+                            });
+                        };
+                        
+                        getHistory(historyContext);
+                    });
+                    
+                    this.get('#/register/:size', function(context) {
+                        context.app.swap('');
+                        this.render('partials/register_form.template').appendTo(this.$element());
+                        this.truck_size = this.params['size'];
+                        $("#truck_number").focus();
+                    });
+                    
+                    this.get('#/edit/:id', function(context) {
+                        context.app.swap('');
+                        
+                        var id = this.params['id'];
+                        
+                        var item = {
+                            truck_number: "",
+                            phone: "",
+                            destination: "",
+                            comment: ""
+                        };
+                        
+                        $.ajax ({
+                            type: "GET",                                   
+                            url: "http://localhost/trucks/api/v1/registry/" + id,                            
+                            dataType: "json",
+                            cache: false,
+                            success: function(data) {
+                                //console.log(data);
+                                if (data.item) {
+                                    context.render('partials/edit.template', {item: data.item}).appendTo(context.$element());
+                                } 
+                            }
+                        });
+                    });
+                    
+                    this.post('#/register', function() {
+                      form_fields = this.params;
+                      //this.log($.param(form_fields.toHash()));
+                      //console.log(form_fields);
+                        
+                      var object = { 
+                        "truck_number": form_fields.truck_number,
+                        "phone": form_fields.phone,
+                        "destination": form_fields.destination,
+                        "comment": form_fields.comment,
+                        "size": form_fields.size
+                      };
+                        
+                      $("#truck_number").val('');
+                      $("#phone").val('');
+                      $("#comment").val('');
+                      $("#truck_number").focus();
+                        
+                      console.log(object);
+                        
+                      $.ajax ({
+                        type: "POST",                                   
+                        url: "http://localhost/trucks/api/v1/registry",                            
+                        data: object,
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            console.log(data);
+                            form_fields = data;
+                            //document.location = '#/register/' + data.item.size;
+                            //location.reload(true);
+                        }
+                      });
+                    });
+                    
+                    this.post('#/edit', function() {
+                      form_fields = this.params;
+                    
+                      var object = {
+                        "truck_number": form_fields.truck_number,
+                        "phone": form_fields.phone,
+                        "destination": form_fields.destination,
+                        "comment": form_fields.comment,
+                        "size": form_fields.size
+                      };
+                        
+                      $.ajax ({
+                        type: "POST",                                   
+                        url: "http://localhost/trucks/api/v1/registry/" + this.params['id'],                           
+                        data: object,
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            console.log(data);
+                            form_fields = data;
+                            document.location = '#/truck_size/' + data.item.size;
+                        }
+                      });
+                    });
+                    
+                    this.get('#/display', function() {
+                      if (form_fields) {
+                        this.app.swap(form_fields.toHTML());
+                      } else {
+                        this.redirect('#/register');
+                      }
+                    });
+
+                    this.get('#/truck_size/:size', function(context) {
+                        context.app.swap('');
+                        this.render('partials/table.template').appendTo(this.$element());
+                        this.truck_size = this.params['size'];
+                        
+                        function getRegistry(context, truck_size) {
+                            $.ajax ({
+                                type: "GET",                                   
+                                url: "http://localhost/trucks/api/v1/registry/truck_size/" + truck_size,                            
+                                dataType: "json",
+                                cache: false,
+                                timeout: 30000,
+                                success: function(data) {
+                                    //console.log(data);
+                                    $("#"+truck_size).text(data.count);
+                                    $("table tbody").html("");
+                                    if(data.list.length > 0) {
+                                        for (i = 0; i < data.list.length; i++) {
+                                            this.item = data.list[i];
+                                            counter = i + 1;
+                                            this.item.time = this.item.time.slice(11);
+                                            if (!this.item.load_time) {
+                                                this.item.load_time = '';
+                                            } else {
+                                                this.item.load_time = this.item.load_time.slice(11);
+                                            }
+                                            context.render('partials/item.template', {item: this.item, count: counter}).appendTo(context.$element('table tbody'));
+                                        }
+                                    } else {
+                                        $("table tbody").append('<tr><td colspan="8"><p class="text-center">There are no registered trucks in this registry</p></td></tr>');
+                                    }
+                                },
+                                complete: function() {						
+                                    //getData();
+                                }
+                            });
+                        }
+                        
+                        poll(0, this.params['size']);
+                        //getRegistry(context, this.params['size']);
+                        
+                        function poll(timer, size) {
+                            var timeObject = {"timestamp": timer};
+                            var truck_size = size;
+
+                            $.ajax ({
+                                type: "POST",									
+                                url: "http://localhost/trucks/api/v1/poll-server",
+                                data: timeObject,								
+                                dataType: "json",						
+                                timeout: 30000,
+                                cache: false,
+                                success: function(data) {
+                                            timer = data.timestamp;
+                                            //console.log(truck_size);
+                                            if (timer !== null) {
+                                                getRegistry(context, size);
+                                            }
+                                        },
+                                complete: function() {						
+                                            //poll(timer, truck_size);
+                                        }
+                            });
+                        };
+                    });
+
+                    this.get('#/compose', function(context) {
+                        context.app.swap('');
+                        context.$element().append('<h1>say hello to?</h1>'
+                          + '<form action="#/compose" method="post">'
+                          + '<input type="text" name="to" />'
+                          + '<input type="submit" name="submit" />'
+                          + '</form>'); 
+                    });
+
+                    this.post('#/compose', function(context) {
+                        context.app.swap('');
+                        var to = this.params['to'];
+                        context.$element().append('<h1>hi ' + to + '</h1>');
+                    });
+                    
+                    var events = function() {
+                        
+                        // console.log("Executing....");
+                    
+                        $(document).delegate("table tbody tr td button.load", "click",
+                         function handler(event) {
+                            var id = event.target.id;
+                            var len = id.length;
+                            var i = id.slice(1,len);
+                            event.preventDefault();
+                            
+                            const electron = require('electron');
+                            const {ipcRenderer} = electron;
+
+                            ipcRenderer.send('open-load-window', i);
+                        });
+                        
+                        $(document).delegate("table tbody tr td button.unload", "click",
+                         function handler(event) {
+                            var id = event.target.id;
+                            var len = id.length;
+                            var i = id.slice(2,len);
+                            event.preventDefault();
+                            
+                            const electron = require('electron');
+                            const {ipcRenderer} = electron;
+
+                            ipcRenderer.send('open-unload-window', i);
+                        });
+
+                        $(document).delegate("table tbody tr td button.delete", "click",
+                         function handler(event) {
+                            var id = event.target.id;
+                            var len = id.length;
+                            var i = id.slice(1,len);
+                            
+                            console.log(i);
+                            event.preventDefault();
+                            
+                            const electron = require('electron');
+                            const {ipcRenderer} = electron;
+
+                            ipcRenderer.send('open-delete-window', i);
+                        });
+                    }
+                    
+                    events();
+                    
+                    //$("table").tableExport();
+                });
+                
+                ratPack.run('#/truck_size/4-tonne');
+            });
+            
+            $(function() {
+                const electron = require('electron');
+                const {ipcRenderer} = electron;
+            
+                const Store = require('electron-store');
+                const store = new Store();
+                
+                ipcRenderer.on('truck:id', function(e, value) {
+                    store.set('id', value);
+                });
+                
+                ipcRenderer.on('unload:id', function(e, value) {
+                    store.set('id', value);
+                });
+                
+                ipcRenderer.on('delete:id', function(e, value) {
+                    store.set('id', value);
+                });
+                
+                ipcRenderer.on('load_data', function(e, data) {
+                    //console.log(data);
+                    loadTruck(data);
+                });
+                
+                ipcRenderer.on('unload', function(e, id) {
+                    console.log(id);
+                    unloadTruck(id);
+                });
+                
+                ipcRenderer.on('delete', function(e, id) {
+                    console.log(id);
+                    removeTruck(id);
+                });
+                
+                function loadTruck(data) {
+                    $.ajax ({
+                        type: "POST",
+                        data: data,
+                        url: "http://localhost/trucks/api/v1/registry/" + data.id + "/load",                           
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+                
+                function unloadTruck(id) {
+                    $.ajax ({
+                        type: "POST",
+                        url: "http://localhost/trucks/api/v1/registry/" + id + "/unload",                           
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+                
+                function removeTruck(id) {
+                    $.ajax ({
+                        type: "DELETE",                                   
+                        url: "http://localhost/trucks/api/v1/registry/" + id,                           
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+                
+                function getCount(size) {
+                    $.ajax ({
+                        type: "GET",                                   
+                        url: "http://localhost/trucks/api/v1/registry/count/" + size,                           
+                        dataType: "json",
+                        cache: false,
+                        success: function(data) {
+                            $("#"+size).text(data.count);
+                        }
+
+                    });
+                }
+                
+                function getCounts() {
+                    getCount('4-tonne');
+                    getCount('10-tonne');
+                    getCount('15-tonne');
+                    getCount('20-tonne');
+                    getCount('32-tonne');
+                }
+                
+                //getCounts();
+            });
+            
+        </script>
+
+    </body>
+</html>

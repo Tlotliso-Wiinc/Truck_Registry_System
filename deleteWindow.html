@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Remove Truck</title>
+	<link rel="stylesheet" href="lib/bootstrap-4.0.0-beta.2/dist/css/bootstrap.min.css">
+	<style type="text/css">
+		.dialog {
+			margin-top: 15px;
+		}
+
+		h5 {
+			font-size: 16px;
+		}
+
+		.buttons {
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="dialog text-center center-block">
+					<h5 class="text-danger">Are you sure you want to remove this truck?</h5>
+					<div class="btn-group buttons center-block" role="group" aria-label="">
+					  <button type="button" class="btn btn-success" id="yes">Yes</button>
+					  <button type="button" class="btn btn-danger" id="no">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ 	<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+
+		const electron = require('electron');
+        const {ipcRenderer} = electron;
+          
+        const Store = require('electron-store');
+        const store = new Store();
+
+        const no = document.querySelector('#no');
+        no.addEventListener('click', function(e) {
+        	e.preventDefault();
+        	ipcRenderer.send('no-delete');
+        });
+
+        const yes = document.querySelector('#yes');
+        yes.addEventListener('click', function(e) {
+        	e.preventDefault();
+        	ipcRenderer.send('yes-delete', store.get('id'));
+        });
+
+	</script>
+</body>
+</html>
